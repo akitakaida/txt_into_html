@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>Text Tranformer</title>
+</head>
+<body>
+    <p>タイトルとテキストを入力すると自動でHTMLファイルに変換し、ダウンロードします。</p>
+    <p>URLは自動でaタグに変換されます。</p>
+    <input type="text" name="title" id="title" placeholder="タイトルを入力">.html
+    <p></p>
+    <textarea name="text" id="text" cols="50" rows="10" placeholder="Textを入力"></textarea>
+    <br>
+    <input type="button" onclick="reset()" value="RESET"></input>
+    <input type="button" onclick="run()" value="GO"></input>
+    <h2>!Caution!</h2>
+    <h3>URLを入力するときは必ず改行してください</h3>
+    <p>×<br>Google　https://www.google.com</p>
+    <p>○<br>Google<br>https://www.google.com</p>
+    <p><a href="https://www.petitmonte.com/javascript/file_create_download.html">参考</a></p>
+
+    <script>
+        function reset(){
+            document.location.reload();
+        }
+        function transformer(){
+            let text = document.getElementById("text");
+            let row = text.value.split('\n');
+            let title = document.getElementById('title').value;
+            let newText=`<!DOCTYPE html><html lang='ja'><head><title>${title}</title></head><body>`;
+            row.forEach(element => {
+                if(element.indexOf('http') === -1){
+                    newText += `<p>${element}</p>`;
+                }else{
+                    newText += `<p><a href="${element}" target="blank">${element}</a></p>`
+                }
+            });
+            newText += '</body></html>'
+            return newText;
+        }
+        function SaveToFile(FileName,Stream) {
+            if (window.navigator.msSaveBlob) {
+                window.navigator.msSaveBlob(new Blob([Stream], { type: "text/plain" }), FileName);
+            } else {
+                let a = document.createElement("a");
+                a.href = URL.createObjectURL(new Blob([Stream], { type: "text/plain" }));
+                //a.target   = '_blank';
+                a.download = FileName;
+                document.body.appendChild(a) //  FireFox specification
+                a.click();
+                document.body.removeChild(a) //  FireFox specification
+            }
+        }
+        function run(){    
+          let Stream = transformer();
+          let name = document.getElementById('title').value + ".html";
+          SaveToFile(name,Stream);
+        }
+
+    </script>
+</body>
+</html>
