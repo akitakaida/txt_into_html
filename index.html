@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Text into HTML</title>
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Text into HTML</h1>
+        </div>
+    </header>
+    <div class="main-wrapper">
+        <div class="container">
+            <p>タイトルとテキストを入力すると自動でHTMLファイルに変換し、ダウンロードします。</p>
+            <p>URLは自動でaタグに変換されます。</p>
+            <form action="index.html">
+                <input type="text" name="title" id="title" placeholder="タイトルを入力">.html
+                <textarea name="text" id="text" placeholder="テキストを入力"></textarea>
+                <input type="button" onclick="reset()" value="RESET" class="btn"></input>
+                <input type="submit" onclick="run()" value="GO" class="btn"></input>   
+            </form>
+        </div>
+    </div>
+    <div class="caution-wrapper">
+        <div class="container">
+            <h2>!Caution!</h2>
+            <h3>URLを入力するときは必ず改行してください</h3>
+            <p>×<br>Google　https://www.google.com</p>
+            <p>○<br>Google<br>https://www.google.com</p>
+        </div>
+    </div>
+    <div class="ref-wrapper">
+        <div class="container">
+            <p>参考</p>
+            <p>JavaScriptでファイルを作成してダウンロードする<br>
+                <a href="https://www.petitmonte.com/javascript/file_create_download.html">https://www.petitmonte.com/javascript/file_create_download.html</a>
+            </p>
+        </div>
+    </div>   
+</body>
+</html>
