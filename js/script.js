@@ -4,15 +4,14 @@ function reset() {
 }
 
 //textをHTMLの形に成形
-function transformer(text) {
+function transformer(text, title) {
     let row = text.split('\n');
-    let title = document.getElementById('title').value;
     let newText = `<!DOCTYPE html><html lang='ja'><head><title>${title}</title></head><body>`;
     row.forEach(element => {
-        if (element.indexOf('http://') > -1 || element.indexOf('https://') > -1) {
-            newText += `<p><a href="${element}" target="blank">${element}</a></p>`
-        } else {
+        if (element.indexOf('http') === -1) {
             newText += `<p>${element}</p>`;
+        } else {
+            newText += `<p><a href="${element}" target="blank">${element}</a></p>`
         }
     });
     newText += '</body></html>'
@@ -35,15 +34,18 @@ function SaveToFile(FileName, Stream) {
 }
 
 function run() {
-    let name = document.getElementById('title').value;
+    let title = document.getElementById('title').value;
     let text = document.getElementById("text").value;
-    if (name != "" && text != "") {
-        let Stream = transformer(text);
-        SaveToFile(name + ".html", Stream);
-    } else if( name == "" ) {
-        alert("タイトルを入力してください");
-    } else {
-        alert("テキストを入力してください");
+    if (document.getElementById("check").checked) {
+        let row = text.split('\n');
+        title = row[0];
     }
-
+    if (title == "") {
+        alert("タイトルを入力してください");
+    } else if (text == "") {
+        alert("テキストを入力してください");
+    } else {
+        let html = transformer(text, title);
+        SaveToFile(title + ".html", html);
+    }
 }
